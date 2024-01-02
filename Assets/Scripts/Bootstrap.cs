@@ -16,11 +16,11 @@ public class Bootstrap : MonoBehaviour
         // Generate or Load Game
         if (_isNewGame)
         {
-            var spaceShip = new BaseSpaceShipGenerator();
+            var basePlaceGenerator = new BasePlaceGenerator();
 
             var sizeX = 5;
             var sizeZ = 5;
-            _gameMap = new GameMap(sizeX, sizeZ, spaceShip);
+            _gameMap = new GameMap(sizeX, sizeZ, basePlaceGenerator);
             InstantiateMaps();
             // RegAndInstantiateWalls(sizeX, sizeZ);
             _gameMap.TryRegister(new Coordinate(0, 0), player);
@@ -34,7 +34,7 @@ public class Bootstrap : MonoBehaviour
 
     private void InstantiateMaps()
     {
-        foreach (var (coordinate, cell) in _gameMap.Maps)
+        foreach (var (coordinate, cell) in _gameMap.Map)
         {
             Instantiate(cellPrefab, new Vector3(coordinate.X, cellPrefab.transform.position.y, coordinate.Z),
                 Quaternion.identity);

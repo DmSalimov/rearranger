@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class GameMap : IMover
 {
-    private Dictionary<Coordinate, ICellObject> _maps;
-    public IReadOnlyDictionary<Coordinate, ICellObject> Maps => _maps;
+    private Dictionary<Coordinate, ICellObject> _map;
+    public IReadOnlyDictionary<Coordinate, ICellObject> Map => _map;
 
     private int _sizeX;
     private int _sizeZ;
 
     public GameMap(int sizeX, int sizeZ, IGenerator generator)
     {
-        _maps = new Dictionary<Coordinate, ICellObject>(generator.Generate(sizeX, sizeZ));
+        var map = generator.Generate(sizeX, sizeZ);
+        map.Remove(new Coordinate(3, 3));
+        _map = new Dictionary<Coordinate, ICellObject>(map);
     }
 
     public bool TryMove(ICellObject who, Direction direction)
     {
         var from = who.GetCoordinate();
         var to = new Coordinate(from.X + direction.X, from.Z + direction.Z);
-        var toInArea = _maps.TryGetValue(to, out ICellObject whoInDirection);
+        var toInArea = _map.TryGetValue(to, out ICellObject whoInDirection);
 
         if (toInArea)
         {
@@ -51,17 +53,17 @@ public class GameMap : IMover
 
     private void RegisterMove(Coordinate from, Coordinate to)
     {
-        _maps[to] = _maps[from];
-        _maps[to].SetCoordinate(to, true);
-        _maps[from] = null;
+        _map[to] = _map[from];
+        _map[to].SetCoordinate(to, true);
+        _map[from] = null;
     }
 
     public bool TryRegister(Coordinate coordinate, ICellObject cell)
     {
-        _maps.TryGetValue(coordinate, out ICellObject who);
+        _map.TryGetValue(coordinate, out ICellObject who);
         if (who == null)
         {
-            _maps[coordinate] = cell;
+            _map[coordinate] = cell;
             cell.SetCoordinate(coordinate);
             return true;
         }
