@@ -1,3 +1,4 @@
+using Cells;
 using UnityEngine;
 
 public class Controller : MonoBehaviour

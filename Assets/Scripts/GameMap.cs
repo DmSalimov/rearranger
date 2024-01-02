@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Cells;
 using UnityEngine;
+using Level;
+
 
 public class GameMap : IMover
 {
@@ -10,11 +13,16 @@ public class GameMap : IMover
     private int _sizeX;
     private int _sizeZ;
 
-    public GameMap(int sizeX, int sizeZ, IGenerator generator)
+    public GameMap(LevelConfigModel levelConfig)
     {
-        var map = generator.Generate(sizeX, sizeZ);
-        map.Remove(new Coordinate(3, 3));
-        _map = new Dictionary<Coordinate, ICellObject>(map);
+        _map = new Dictionary<Coordinate, ICellObject>();
+        foreach (var item in levelConfig.items)
+        {
+            if (item.type == LevelItemType.Platform)
+            {
+                _map.Add(new Coordinate(item.x, item.z), null);
+            }
+        }
     }
 
     public bool TryMove(ICellObject who, Direction direction)
