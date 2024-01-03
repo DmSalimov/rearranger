@@ -25,5 +25,34 @@ namespace Helpers
                 onEnd();
             }
         }
+
+        public static IEnumerator RotateOverSeconds(Transform transform, Vector3 end, float seconds,
+            [CanBeNull] Action onEnd)
+        {
+            float elapsedTime = 0;
+            Vector3 starting = transform.eulerAngles;
+            
+            Debug.Log(starting +" "+ end);
+
+            if (starting != end)
+            {
+                while (elapsedTime < seconds)
+                {
+                    transform.eulerAngles = Vector3.Lerp(starting, end, (elapsedTime / seconds));
+                    elapsedTime += Time.deltaTime;
+                    yield return new WaitForEndOfFrame();
+                }
+                transform.eulerAngles = end;
+            }
+            else
+            {
+                Debug.Log("===");
+            }
+
+            if (onEnd != null)
+            {
+                onEnd();
+            }
+        }
     }
 }

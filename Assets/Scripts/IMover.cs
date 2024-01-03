@@ -2,5 +2,5 @@ using Cells;
 
 public interface IMover
 {
-    public bool TryMove(ICellObject who, Direction direction);
+    public bool TryMove(IMove who, Direction direction);
 }

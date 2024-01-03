@@ -1,10 +1,13 @@
-using System;
+using Level;
+using UnityEngine;
 
 namespace Cells
 {
-    public class Box: BaseCell, ICellObject
+    public class Box: Cell, IMove
     {
-        public bool TryMove(ICellObject whom)
+        public override LevelItemType GetType() => LevelItemType.Box;
+        
+        public bool TryMove(IMove whom)
         {
             switch (whom)
             {
@@ -15,7 +18,7 @@ namespace Cells
                 case null:
                     return true;
                 default:
-                    throw new ArgumentException("Необходимо обработать новые объекты");
+                    return false;
             }
         }
 

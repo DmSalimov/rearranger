@@ -15,11 +15,11 @@ public class Bootstrap : MonoBehaviour
 
     void Start()
     {
-        _gameMap = GetLevel();
-        InstantiateMaps();
+        _gameMap = new GameMap();
+        LoadLevel(_gameMap);
         _gameMap.TryRegister(new Coordinate(0, 0), player);
-        
-        
+
+
         // Init
         controller.Init(player, _gameMap);
 
@@ -27,22 +27,33 @@ public class Bootstrap : MonoBehaviour
         _gameMap.TryRegister(new Coordinate(1, 1), box);
     }
 
-    private GameMap GetLevel()
+    private void LoadLevel(GameMap gameMap)
     {
         LevelConfig level1 = new LevelConfig();
         level1.levelNumber = 1;
         level1.level = level1Json.text;
         LevelConfigModel levelConfig = JsonUtility.FromJson<LevelConfigModel>(level1.level);
 
-        return new GameMap(levelConfig);
-    }
 
-    private void InstantiateMaps()
-    {
-        foreach (var (coordinate, cell) in _gameMap.Map)
+        foreach (var item in levelConfig.items)
         {
-            Instantiate(platformPrefab, new Vector3(coordinate.X, platformPrefab.transform.position.y, coordinate.Z),
-                Quaternion.identity);
+            var coordinate = new Coordinate(item.x, item.z);
+            switch (item.type)
+            {
+                case LevelItemType.Player:
+                    gameMap.TryRegister(coordinate, player);
+                    break;
+                case LevelItemType.Box:
+                    gameMap.TryRegister(coordinate, box);
+                    break;
+                case LevelItemType.Platform:
+                    var obj = Instantiate(platformPrefab,
+                        new Vector3(coordinate.X, platformPrefab.transform.position.y, coordinate.Z),
+                        Quaternion.identity);
+                    gameMap.TryRegisterFloor(coordinate, obj.GetComponent<Platform>());
+                    break;
+            }
         }
     }
+
 }

@@ -1,19 +1,20 @@
 using Helpers;
+using Level;
 using UnityEngine;
 
 namespace Cells
 {
-    public abstract class BaseCell: MonoBehaviour
+    public abstract class Cell: MonoBehaviour
     {
         
         [SerializeField] protected float speed = 0.1f;
         
         protected Coordinate coordinate = new Coordinate(0, 0);
 
-        public void SetCoordinate(Coordinate coordinate, bool smoothly = false)
+        public virtual void SetCoordinate(Coordinate crd, bool smoothly = false)
         {
-            this.coordinate = coordinate;
-            var needPos = new Vector3(coordinate.X, transform.position.y, coordinate.Z);
+            coordinate = crd;
+            var needPos = new Vector3(crd.X, transform.position.y, crd.Z);
             if (smoothly)
             {
                 
@@ -25,5 +26,7 @@ namespace Cells
             }
         }
         public Coordinate GetCoordinate() => coordinate;
+
+        public abstract LevelItemType GetType();
     }
 }
