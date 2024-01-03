@@ -1,30 +1,36 @@
+using System.Collections.Generic;
 using Cells;
+using Controllers;
 using UnityEngine;
 using Level;
+using Managers;
 
 public class Bootstrap : MonoBehaviour
 {
     private GameMap _gameMap;
 
-    [SerializeField] private GameObject platformPrefab;
-    [SerializeField] private Controller controller;
-    [SerializeField] private Player player;
-    [SerializeField] private Box box;
+    [Header("Prefabs")] [SerializeField] private GameObject platformPrefab;
+    [SerializeField] private GameObject trailerPrefab;
 
-    [SerializeField] private TextAsset level1Json;
+    [Header("System")] [SerializeField] private Controller controller;
+    [SerializeField] private Player player;
+    [Header("Levels")] [SerializeField] private TextAsset level1Json;
+
+
+    [Header("Tests")] [SerializeField] private Box box;
+
+
+    private MoveManager _moveManager;
 
     void Start()
     {
         _gameMap = new GameMap();
-        LoadLevel(_gameMap);
-        _gameMap.TryRegister(new Coordinate(0, 0), player);
+        _moveManager = new MoveManager(_gameMap);
 
+        LoadLevel(_gameMap);
 
         // Init
-        controller.Init(player, _gameMap);
-
-        // Test Init
-        _gameMap.TryRegister(new Coordinate(1, 1), box);
+        controller.Init(player, _moveManager);
     }
 
     private void LoadLevel(GameMap gameMap)
@@ -34,17 +40,22 @@ public class Bootstrap : MonoBehaviour
         level1.level = level1Json.text;
         LevelConfigModel levelConfig = JsonUtility.FromJson<LevelConfigModel>(level1.level);
 
+        RegisterItems(gameMap, levelConfig.items);
+    }
 
-        foreach (var item in levelConfig.items)
+    private void RegisterItems(GameMap gameMap, List<LevelItemModel> items)
+    {
+        foreach (var item in items)
         {
             var coordinate = new Coordinate(item.x, item.z);
             switch (item.type)
             {
                 case LevelItemType.Player:
-                    gameMap.TryRegister(coordinate, player);
+                    gameMap.TryRegisterMap(coordinate, player);
                     break;
                 case LevelItemType.Box:
-                    gameMap.TryRegister(coordinate, box);
+                    // Test Init -> TODO:: Instantiate box
+                    gameMap.TryRegisterMap(coordinate, box);
                     break;
                 case LevelItemType.Platform:
                     var obj = Instantiate(platformPrefab,
@@ -52,8 +63,13 @@ public class Bootstrap : MonoBehaviour
                         Quaternion.identity);
                     gameMap.TryRegisterFloor(coordinate, obj.GetComponent<Platform>());
                     break;
+                case LevelItemType.Trailer:
+                    var trailerGameObject = Instantiate(trailerPrefab,
+                        new Vector3(coordinate.X, trailerPrefab.transform.position.y, coordinate.Z),
+                        Quaternion.identity);
+                    gameMap.TryRegisterMap(coordinate, trailerGameObject.GetComponent<Trailer>());
+                    break;
             }
         }
     }
-
 }

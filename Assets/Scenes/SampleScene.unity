@@ -554,10 +554,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformPrefab: {fileID: 2703851850939788647, guid: 07c275f40f4984172b89acb4de973a42,
     type: 3}
+  trailerPrefab: {fileID: 5400347902495266643, guid: 802e0655757754d47be572737ec6ea7e,
+    type: 3}
   controller: {fileID: 1303219505}
   player: {fileID: 512632485}
-  box: {fileID: 736093239}
   level1Json: {fileID: 4900000, guid: 92ba1ef44283413bbd8d44ea55afe632, type: 3}
+  box: {fileID: 736093239}
 --- !u!4 &138170692
 Transform:
   m_ObjectHideFlags: 0
@@ -1614,7 +1616,7 @@ Transform:
   - {fileID: 761923627}
   - {fileID: 963194228}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &512632485
 MonoBehaviour:
@@ -2480,7 +2482,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &761923626
 PrefabInstance:
@@ -4142,7 +4144,7 @@ Transform:
   - {fileID: 673450725}
   - {fileID: 213850145}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1346846860
 PrefabInstance:
@@ -4858,6 +4860,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1539823426}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1574415268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1574415269}
+  m_Layer: 0
+  m_Name: ----------------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1574415269
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574415268}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1611157311 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: dad4ed061dbb9402eb5a832d50f5383d,
@@ -5225,7 +5258,7 @@ Transform:
   - {fileID: 204477358}
   - {fileID: 1968888908}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1899955006
 PrefabInstance:

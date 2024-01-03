@@ -8,5 +8,6 @@ namespace Level
         Platform = 0,
         Player = 1,
         Box = 2,
+        Trailer = 3,
     }
 }

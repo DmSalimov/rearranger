@@ -5,16 +5,14 @@ namespace Cells
 {
     public class Box: Cell, IMove
     {
-        public override LevelItemType GetType() => LevelItemType.Box;
+        public override LevelItemType GetCellType() => LevelItemType.Box;
         
-        public bool TryMove(IMove whom)
+        public bool TryMove(IMove whom, Cell floorInDirection)
         {
             switch (whom)
             {
                 case Player player:
-                    return true;
                 case Box box:
-                    return true;
                 case null:
                     return true;
                 default:

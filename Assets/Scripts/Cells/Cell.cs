@@ -27,6 +27,6 @@ namespace Cells
         }
         public Coordinate GetCoordinate() => coordinate;
 
-        public abstract LevelItemType GetType();
+        public abstract LevelItemType GetCellType();
     }
 }
