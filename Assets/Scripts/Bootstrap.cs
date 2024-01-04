@@ -31,7 +31,7 @@ public class Bootstrap : MonoBehaviour
 
         // Init
         controller.Init(player, _moveManager);
-        player.Init(_moveManager);
+        player.Init(_moveManager, _gameMap);
     }
 
     private void LoadLevel(GameMap gameMap)

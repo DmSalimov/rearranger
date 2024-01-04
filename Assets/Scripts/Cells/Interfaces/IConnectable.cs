@@ -15,11 +15,6 @@ namespace Cells.Intrfeces
          * Приципляемся в качестве трейлера
          */
         void Connect(IConnectable who);
-        /**
-         * Обратный вызов
-         */
-        void Joined(IConnectable head);
-
         IConnectable GetTrailer();
         Coordinate GetCoordinate();
     }
