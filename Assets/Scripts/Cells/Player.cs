@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Cells
 {
     [RequireComponent(typeof(Connector))]
-    public class Player : Cell, IMovable
+    public class Player : Cell, IMovable, IActionable
     {
         public override LevelItemType GetCellType() => LevelItemType.Player;
 
@@ -46,7 +46,7 @@ namespace Cells
             coordinate = crd;
             if (connector != null && !connector.IsLast())
             {
-                _mover.Move(connector.GetTrailer(), connector.GetTrailer().GetCoordinate(), oldCoordinate);
+                _mover.MoveTrailer(connector.GetTrailer(), oldCoordinate);
             }
 
             var needPos = new Vector3(crd.X, transform.position.y, crd.Z);
@@ -61,6 +61,11 @@ namespace Cells
             {
                 transform.position = needPos;
             }
+        }
+
+        public void Action()
+        {
+            connector.TryConnecting();
         }
     }
 }

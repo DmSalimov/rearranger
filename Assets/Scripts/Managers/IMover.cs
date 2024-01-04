@@ -7,6 +7,6 @@ namespace Managers
     public interface IMover
     {
         public bool TryMove(IMovable who, Direction direction, bool skipAction = true);
-        public void Move(IConnectable trailer, Coordinate from, Coordinate to);
+        public void MoveTrailer(IConnectable trailer, Coordinate to);
     } 
 }

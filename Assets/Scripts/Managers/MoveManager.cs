@@ -69,13 +69,15 @@ namespace Managers
             return false;
         }
 
-        public void Move(IConnectable trailer, Coordinate from,  Coordinate to)
+        public void MoveTrailer(IConnectable trailer,  Coordinate to)
         {
+            
+            var from = trailer.GetCoordinate();
             RegisterMove(from, to);
 
             if (!trailer.IsLast())
             {
-                Move(trailer.GetTrailer(), trailer.GetTrailer().GetCoordinate() , from);
+                MoveTrailer(trailer.GetTrailer(), from);
             }
         }
 

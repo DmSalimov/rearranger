@@ -37,13 +37,17 @@ namespace Cells.Components
 
         public bool IsConnected() => isConnected;
         public bool IsLast() => IsConnected() && _trailer == null;
-        public void Connect(IConnectable who) => _trailer = who;
+
+        public void ConnectEvent()
+        {
+            isConnected = true;
+        }
         public IConnectable GetTrailer() => _trailer;
         public Coordinate GetCoordinate() => cell.GetCoordinate();
 
         public void TryConnecting()
         {
-            if (!IsConnected())
+            if (IsLast())
             {
                 var up = TryConnectingOnDirection(Direction.Up());
                 if (!up)
@@ -70,10 +74,10 @@ namespace Cells.Components
                 var connectable = cellOnDir.GetComponent<IConnectable>();
                 if (connectable != null)
                 {
-                    if (connectable.IsLast())
+                    if (!connectable.IsConnected())
                     {
-                        connectable.Connect(this);
-                        isConnected = true;
+                        _trailer = connectable;
+                        connectable.ConnectEvent();
                         return true;
                     }
                 }
