@@ -11,6 +11,11 @@ namespace Cells
             Z = z;
         }
 
+        public override string ToString()
+        {
+            return "(X: " + X + " Z: " + Z +")";
+        }
+
         public override bool Equals(object obj)
         {
             var item = obj as Coordinate;

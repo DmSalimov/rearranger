@@ -31,6 +31,7 @@ public class Bootstrap : MonoBehaviour
 
         // Init
         controller.Init(player, _moveManager);
+        player.Init(_moveManager);
     }
 
     private void LoadLevel(GameMap gameMap)
@@ -67,7 +68,10 @@ public class Bootstrap : MonoBehaviour
                     var trailerGameObject = Instantiate(trailerPrefab,
                         new Vector3(coordinate.X, trailerPrefab.transform.position.y, coordinate.Z),
                         Quaternion.identity);
-                    gameMap.TryRegisterMap(coordinate, trailerGameObject.GetComponent<Trailer>());
+                    var trailer = trailerGameObject.GetComponent<Trailer>();
+                    trailer.Init(gameMap);
+                    gameMap.TryRegisterMap(coordinate, trailer);
+                    gameMap.RegisterActionable(trailer);
                     break;
             }
         }

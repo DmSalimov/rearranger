@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 namespace Helpers
@@ -13,6 +12,11 @@ namespace Helpers
             X = x > 0 ? 1 : x < 0 ? -1 : 0;
             Z = z > 0 ? 1 : z < 0 ? -1 : 0;
         }
+
+        public static Direction Up() => new Direction(-1, 0);
+        public static Direction Down() => new Direction(1, 0);
+        public static Direction Left() => new Direction(0, -1);
+        public static Direction Right() => new Direction(0, 1);
     }
 
     public static class DirectionHelper

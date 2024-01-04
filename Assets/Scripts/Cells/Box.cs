@@ -1,13 +1,13 @@
+using Cells.Intrfeces;
 using Level;
-using UnityEngine;
 
 namespace Cells
 {
-    public class Box: Cell, IMove
+    public class Box: Cell, IMovable
     {
         public override LevelItemType GetCellType() => LevelItemType.Box;
         
-        public bool TryMove(IMove whom, Cell floorInDirection)
+        public bool TryMove(IMovable whom, Cell floorInDirection)
         {
             switch (whom)
             {
