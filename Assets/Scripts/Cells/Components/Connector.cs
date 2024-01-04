@@ -35,6 +35,7 @@ namespace Cells.Components
         public void ConnectEvent()
         {
             isConnected = true;
+            TryConnecting();
         }
         public IConnectable GetTrailer() => _trailer;
         public Coordinate GetCoordinate() => cell.GetCoordinate();

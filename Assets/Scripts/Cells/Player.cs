@@ -43,7 +43,7 @@ namespace Cells
             var oldCoordinate = new Coordinate(coordinate.X, coordinate.Z);
             Vector2 direction = new Vector2(coordinate.X - crd.X, coordinate.Z - crd.Z);
             coordinate = crd;
-            if (connector != null && !connector.IsLast())
+            if (!connector.IsLast())
             {
                 _mover.MoveTrailer(connector.GetTrailer(), oldCoordinate);
             }

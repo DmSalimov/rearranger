@@ -22,12 +22,15 @@ public class Bootstrap : MonoBehaviour
 
     void Start()
     {
-        GameMap.Init();
-        LoadLevel(1);
-        _moveManager = new MoveManager();
+        
         // Init
+        GameMap.Init();
+        _moveManager = new MoveManager();
         controller.Init(player, _moveManager);
         player.Init(_moveManager);
+        
+        // Load
+        LoadLevel(1);
     }
 
     public void RestartLevel(int levelNumber)
