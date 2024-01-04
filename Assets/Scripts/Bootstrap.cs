@@ -7,8 +7,6 @@ using Managers;
 
 public class Bootstrap : MonoBehaviour
 {
-    private GameMap _gameMap;
-
     [Header("Prefabs")] [SerializeField] private GameObject platformPrefab;
     [SerializeField] private GameObject trailerPrefab;
 
@@ -24,55 +22,59 @@ public class Bootstrap : MonoBehaviour
 
     void Start()
     {
-        _gameMap = new GameMap();
-        _moveManager = new MoveManager(_gameMap);
-
-        LoadLevel(_gameMap);
-
+        GameMap.Init();
+        LoadLevel(1);
+        _moveManager = new MoveManager();
         // Init
         controller.Init(player, _moveManager);
-        player.Init(_moveManager, _gameMap);
-        _gameMap.RegisterActionable(player);
+        player.Init(_moveManager);
     }
 
-    private void LoadLevel(GameMap gameMap)
+    public void RestartLevel(int levelNumber)
+    {
+        GameMap.Clear();
+        LoadLevel(levelNumber);
+    }
+
+    private void LoadLevel(int levelNumber)
     {
         LevelConfig level1 = new LevelConfig();
         level1.levelNumber = 1;
         level1.level = level1Json.text;
         LevelConfigModel levelConfig = JsonUtility.FromJson<LevelConfigModel>(level1.level);
 
-        RegisterItems(gameMap, levelConfig.items);
+        RegisterGameMap(levelConfig.items);
     }
 
-    private void RegisterItems(GameMap gameMap, List<LevelItemModel> items)
+    private void RegisterGameMap(List<LevelItemModel> items)
     {
+        GameMap.RegisterActionable(player);
         foreach (var item in items)
         {
             var coordinate = new Coordinate(item.x, item.z);
             switch (item.type)
             {
                 case LevelItemType.Player:
-                    gameMap.TryRegisterMap(coordinate, player);
+                    GameMap.TryRegisterMap(coordinate, player);
                     break;
                 case LevelItemType.Box:
                     // Test Init -> TODO:: Instantiate box
-                    gameMap.TryRegisterMap(coordinate, box);
+                    GameMap.TryRegisterMap(coordinate, box);
                     break;
                 case LevelItemType.Platform:
                     var obj = Instantiate(platformPrefab,
                         new Vector3(coordinate.X, platformPrefab.transform.position.y, coordinate.Z),
                         Quaternion.identity);
-                    gameMap.TryRegisterFloor(coordinate, obj.GetComponent<Platform>());
+                    GameMap.TryRegisterFloor(coordinate, obj.GetComponent<Platform>());
                     break;
                 case LevelItemType.Trailer:
                     var trailerGameObject = Instantiate(trailerPrefab,
                         new Vector3(coordinate.X, trailerPrefab.transform.position.y, coordinate.Z),
                         Quaternion.identity);
                     var trailer = trailerGameObject.GetComponent<Trailer>();
-                    trailer.Init(gameMap);
-                    gameMap.TryRegisterMap(coordinate, trailer);
-                    gameMap.RegisterActionable(trailer);
+                    trailer.Init();
+                    GameMap.TryRegisterMap(coordinate, trailer);
+                    GameMap.RegisterActionable(trailer);
                     break;
             }
         }

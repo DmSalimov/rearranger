@@ -13,10 +13,9 @@ namespace Cells
 
         protected Connector connector;
 
-        public void Init(GameMap gameMap)
+        public void Init()
         {
             connector = GetComponent<Connector>();
-            connector.Init(gameMap);
         }
 
         public bool TryMove(IMovable whom, Cell floorInDirection)

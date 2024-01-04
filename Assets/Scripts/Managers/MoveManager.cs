@@ -6,12 +6,6 @@ namespace Managers
 {
     public class MoveManager : IMover
     {
-        private GameMap GameMap { set; get; }
-
-        public MoveManager(GameMap gameMap)
-        {
-            GameMap = gameMap;
-        }
 
         private void RegisterMove(Coordinate from, Coordinate to) => GameMap.RegisterMove(from, to);
 

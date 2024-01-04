@@ -14,15 +14,9 @@ namespace Cells.Components
         [SerializeField] private GameObject lastObject;
 
 
-        private GameMap _gameMap;
         protected Cell cell;
 
         private IConnectable _trailer = null;
-
-        public void Init(GameMap gameMap)
-        {
-            _gameMap = gameMap;
-        }
 
         private void Start()
         {
@@ -67,7 +61,7 @@ namespace Cells.Components
 
         private bool TryConnectingOnDirection(Direction direction)
         {
-            var map = _gameMap.Map;
+            var map = GameMap.Map;
             var have = map.TryGetValue(GetCoordinateWithDirection(direction), out Cell cellOnDir);
             if (have)
             {

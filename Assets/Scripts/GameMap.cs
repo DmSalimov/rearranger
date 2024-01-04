@@ -3,30 +3,28 @@ using Cells;
 using Cells.Intrfeces;
 using UnityEngine;
 
-public class GameMap
+public static class GameMap
 {
-    private Dictionary<Coordinate, Cell> _map;
-    private Dictionary<Coordinate, Cell> _floor;
-    private List<IActionable> _actionables;
-    public IReadOnlyDictionary<Coordinate, Cell> Map => _map;
-    public IReadOnlyDictionary<Coordinate, Cell> Floor => _floor;
-    public IReadOnlyList<IActionable> Actionables => _actionables;
+    private static Dictionary<Coordinate, Cell> _map = new Dictionary<Coordinate, Cell>();
+    private static Dictionary<Coordinate, Cell> _floor = new Dictionary<Coordinate, Cell>();
+    private static List<IActionable> _actionables = new List<IActionable>();
+    public static IReadOnlyDictionary<Coordinate, Cell> Map => _map;
+    public static IReadOnlyDictionary<Coordinate, Cell> Floor => _floor;
+    public static IReadOnlyList<IActionable> Actionables => _actionables;
 
-    public GameMap()
+    public static void Init()
     {
-        _map = new Dictionary<Coordinate, Cell>();
-        _floor = new Dictionary<Coordinate, Cell>();
-        _actionables = new List<IActionable>();
+        Clear();
     }
 
-    public void Clear()
+    public static void Clear()
     {
         _map.Clear();
         _floor.Clear();
         _actionables.Clear();
     }
 
-    public void RegisterMove(Coordinate from, Coordinate to)
+    public static void RegisterMove(Coordinate from, Coordinate to)
     {
         _map[to] = _map[from];
         _map.Remove(from);
@@ -34,15 +32,15 @@ public class GameMap
         // _map[from] = null;
     }
 
-    public void RegisterActionable(IActionable item)
+    public static void RegisterActionable(IActionable item)
     {
         _actionables.Add(item);
     }
 
-    public bool TryRegisterMap(Coordinate coordinate, Cell cell) => TryRegister(_map, coordinate, cell);
-    public bool TryRegisterFloor(Coordinate coordinate, Cell cell) => TryRegister(_floor, coordinate, cell);
+    public static bool TryRegisterMap(Coordinate coordinate, Cell cell) => TryRegister(_map, coordinate, cell);
+    public static bool TryRegisterFloor(Coordinate coordinate, Cell cell) => TryRegister(_floor, coordinate, cell);
 
-    private bool TryRegister(Dictionary<Coordinate, Cell> where, Coordinate coordinate, Cell cell)
+    private static bool TryRegister(Dictionary<Coordinate, Cell> where, Coordinate coordinate, Cell cell)
     {
         where.TryGetValue(coordinate, out Cell whoInCoordinate);
         if (whoInCoordinate == null)

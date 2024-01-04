@@ -17,11 +17,10 @@ namespace Cells
         private IMover _mover;
         private Connector connector;
         
-        public void Init(IMover mover, GameMap gameMap)
+        public void Init(IMover mover)
         {
             _mover = mover;
             connector = GetComponent<Connector>();
-            connector.Init(gameMap);
         }
 
         public bool TryMove(IMovable whom, Cell floorInDirection)
